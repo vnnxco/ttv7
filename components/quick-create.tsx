@@ -17,7 +17,8 @@ import {
   BookOpenIcon,
   FlaskConicalIcon,
   DatabaseIcon,
-  ArrowUpRightIcon
+  ArrowUpRightIcon,
+  ZapIcon
 } from "lucide-react"
 
 import { Button } from '@/components/ui/button'
@@ -28,7 +29,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 
 interface Plan {
-  id: 'hobby' | 'creator' | 'business'
+  id: 'personal' | 'creator' | 'business'
   name: string
   price: number
   description: string
@@ -36,52 +37,65 @@ interface Plan {
   features: string[]
   popular?: boolean
   badge?: string
+  buttonText?: string
+  buttonVariant?: 'default' | 'outline' | 'secondary'
 }
 
 const plans: Plan[] = [
   {
-    id: 'hobby',
-    name: 'Hobby',
-    price: 5,
-    description: 'Personal assistant for individual use',
+    id: 'personal',
+    name: 'Personal',
+    price: 2,
+    description: 'Perfect for individual creators and personal projects',
     credits: '2k credits/month',
     features: [
       '1 project',
       '2,000 message credits',
       'Basic support',
-      'Standard templates'
-    ]
+      'Standard templates',
+      'Public and private projects'
+    ],
+    buttonText: 'Get Started',
+    buttonVariant: 'outline'
   },
   {
     id: 'creator',
     name: 'Creator',
     price: 19,
-    description: 'Monetization engine for content creators',
+    description: 'More power for content creators and professionals',
     credits: '15k credits/month',
     features: [
-      'All Hobby features',
+      'Everything in Personal',
       '5 projects',
       '15,000 message credits',
       'Website scraping',
-      'Priority support'
+      'Priority support',
+      'Advanced templates',
+      'No daily token limit'
     ],
     popular: true,
-    badge: 'MOST POPULAR'
+    badge: 'POPULAR',
+    buttonText: 'Start Creating',
+    buttonVariant: 'default'
   },
   {
     id: 'business',
     name: 'Business',
-    price: 79,
-    description: 'Enterprise support and collaboration',
+    price: 99,
+    description: 'Enterprise features for teams and organizations',
     credits: '60k credits/month',
     features: [
-      'All Creator features',
+      'Everything in Creator',
       'Unlimited projects',
       '60,000 message credits',
       'Document uploads',
-      'Invite 3 team members',
-      'Advanced analytics'
-    ]
+      'Team collaboration (3 members)',
+      'Advanced analytics',
+      'Custom integrations',
+      'Dedicated support'
+    ],
+    buttonText: 'Scale Your Business',
+    buttonVariant: 'outline'
   }
 ]
 
@@ -100,7 +114,7 @@ interface QuickCreateProps {
 
 export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
   const [currentStep, setCurrentStep] = useState(1)
-  const [selectedPlan, setSelectedPlan] = useState<'hobby' | 'creator' | 'business'>('creator')
+  const [selectedPlan, setSelectedPlan] = useState<'personal' | 'creator' | 'business'>('creator')
   const [projectName, setProjectName] = useState('')
   const [description, setDescription] = useState('')
   const [socialLinks, setSocialLinks] = useState<Record<string, string>>({})
@@ -148,62 +162,99 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
   const renderStep1 = () => (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-sidebar-foreground mb-2">Choose Your Plan</h2>
-        <p className="text-sidebar-foreground/70">Select the plan that best fits your needs</p>
+        <h2 className="text-3xl font-bold text-sidebar-foreground mb-3">Choose Your Plan</h2>
+        <p className="text-sidebar-foreground/70 text-lg">Select the plan that best fits your needs</p>
+        
+        {/* Billing Toggle */}
+        <div className="flex items-center justify-center gap-3 mt-6">
+          <span className="text-sm text-sidebar-foreground/70">Monthly</span>
+          <div className="relative">
+            <div className="w-12 h-6 bg-sidebar-border rounded-full p-1">
+              <div className="w-4 h-4 bg-sidebar-foreground rounded-full transition-transform"></div>
+            </div>
+          </div>
+          <span className="text-sm text-sidebar-foreground/70">Annual</span>
+          <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 text-xs ml-2">
+            Save 10%
+          </Badge>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
         {plans.map((plan) => (
           <Card
             key={plan.id}
-            className={`relative p-6 cursor-pointer transition-all duration-200 ${
+            className={`relative p-8 cursor-pointer transition-all duration-300 hover:scale-105 ${
               selectedPlan === plan.id
-                ? 'border-blue-500 bg-blue-500/5'
-                : 'border-sidebar-border bg-sidebar-accent hover:border-sidebar-foreground/20'
-            } ${plan.popular ? 'ring-2 ring-blue-500/20' : ''}`}
+                ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/20'
+                : 'border-sidebar-border bg-sidebar-accent hover:border-sidebar-foreground/30 hover:shadow-lg'
+            } ${plan.popular ? 'ring-2 ring-blue-500/30 scale-105' : ''}`}
             onClick={() => setSelectedPlan(plan.id)}
           >
             {plan.badge && (
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-blue-600 text-white px-3 py-1 text-xs font-medium">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1.5 text-xs font-semibold shadow-lg">
                   {plan.badge}
                 </Badge>
               </div>
             )}
 
-            <div className="text-center mb-6">
-              <h3 className="text-xl font-bold text-sidebar-foreground mb-2">{plan.name}</h3>
-              <p className="text-sidebar-foreground/70 text-sm mb-4">{plan.description}</p>
-              <div className="mb-2">
-                <span className="text-3xl font-bold text-sidebar-foreground">${plan.price}</span>
-                <span className="text-sidebar-foreground/70 ml-1">per month</span>
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold text-sidebar-foreground mb-3">{plan.name}</h3>
+              <p className="text-sidebar-foreground/70 text-sm mb-6 leading-relaxed">{plan.description}</p>
+              
+              <div className="mb-4">
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-4xl font-bold text-sidebar-foreground">${plan.price}</span>
+                  <span className="text-sidebar-foreground/70 text-lg">/ month</span>
+                </div>
+                <p className="text-sidebar-foreground/60 text-sm mt-2 font-medium">{plan.credits}</p>
               </div>
-              <p className="text-sidebar-foreground/60 text-sm">{plan.credits}</p>
             </div>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-4 mb-8">
               {plan.features.map((feature, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <CheckIcon className="h-4 w-4 text-green-500 flex-shrink-0" />
-                  <span className="text-sidebar-foreground/80 text-sm">{feature}</span>
+                <div key={index} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
+                    <CheckIcon className="h-3 w-3 text-green-500" />
+                  </div>
+                  <span className="text-sidebar-foreground/80 text-sm leading-relaxed">{feature}</span>
                 </div>
               ))}
             </div>
 
             <Button
-              className={`w-full ${
+              className={`w-full py-3 font-semibold transition-all duration-200 ${
                 selectedPlan === plan.id
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
                   : plan.popular
-                  ? 'bg-sidebar-foreground text-sidebar hover:bg-sidebar-foreground/90'
-                  : 'bg-sidebar-accent border border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent/80'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
+                  : 'bg-sidebar-accent border-2 border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent/80 hover:border-sidebar-foreground/30'
               }`}
-              variant={selectedPlan === plan.id ? 'default' : 'outline'}
+              variant={selectedPlan === plan.id ? 'default' : plan.buttonVariant}
             >
-              {selectedPlan === plan.id ? 'Selected' : 'Select Plan'}
+              {selectedPlan === plan.id ? (
+                <div className="flex items-center gap-2">
+                  <CheckIcon className="h-4 w-4" />
+                  Selected
+                </div>
+              ) : (
+                plan.buttonText
+              )}
             </Button>
           </Card>
         ))}
+      </div>
+
+      {/* Features Comparison */}
+      <div className="text-center mt-12">
+        <p className="text-sidebar-foreground/60 text-sm mb-4">
+          All plans include: SSL security, 99.9% uptime, and email support
+        </p>
+        <Button variant="ghost" className="text-blue-500 hover:text-blue-600 text-sm">
+          Compare all features
+          <ArrowUpRightIcon className="h-4 w-4 ml-1" />
+        </Button>
       </div>
     </div>
   )
