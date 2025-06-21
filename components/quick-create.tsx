@@ -47,13 +47,13 @@ const plans: Plan[] = [
     name: 'Personal',
     price: 2,
     description: 'Perfect for individual creators and personal projects',
-    credits: '2k credits/month',
+    credits: '500+ Long Chats, 10,000+ Short Chats',
     features: [
-      '1 project',
-      '2,000 message credits',
-      'Basic support',
-      'Standard templates',
-      'Public and private projects'
+      '500+ Long Chats',
+      '10,000+ Short Chats',
+      'Standard data templates',
+      'Publicly accessible chatbots',
+      'Analytics feature'
     ],
     buttonText: 'Get Started',
     buttonVariant: 'outline'
@@ -63,15 +63,13 @@ const plans: Plan[] = [
     name: 'Creator',
     price: 19,
     description: 'More power for content creators and professionals',
-    credits: '15k credits/month',
+    credits: '5,000+ Long Chats, 100,000+ Short Chats',
     features: [
       'Everything in Personal',
-      '5 projects',
-      '15,000 message credits',
-      'Website scraping',
-      'Priority support',
-      'Advanced templates',
-      'No daily token limit'
+      '2 Project Collaborators',
+      '5,000+ Long Chats',
+      '100,000+ Short Chats',
+      'Image context'
     ],
     popular: true,
     badge: 'POPULAR',
@@ -83,16 +81,13 @@ const plans: Plan[] = [
     name: 'Business',
     price: 99,
     description: 'Enterprise features for teams and organizations',
-    credits: '60k credits/month',
+    credits: '50,000+ Long Chats, 1,000,000+ Short Chats',
     features: [
-      'Everything in Creator',
-      'Unlimited projects',
-      '60,000 message credits',
-      'Document uploads',
-      'Team collaboration (3 members)',
-      'Advanced analytics',
-      'Custom integrations',
-      'Dedicated support'
+      'Everything in Creator plan',
+      '10 Project Collaborators',
+      '50,000+ Long Chats',
+      '1,000,000+ Short Chats',
+      'Priority support'
     ],
     buttonText: 'Scale Your Business',
     buttonVariant: 'outline'
@@ -409,7 +404,7 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             <span className="text-sidebar-foreground font-medium">{plans.find(p => p.id === selectedPlan)?.name}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sidebar-foreground/70">Monthly Credits:</span>
+            <span className="text-sidebar-foreground/70">Chat Limits:</span>
             <span className="text-sidebar-foreground font-medium">{plans.find(p => p.id === selectedPlan)?.credits}</span>
           </div>
           {Object.keys(socialLinks).filter(key => socialLinks[key]).length > 0 && (
