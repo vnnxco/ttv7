@@ -33,7 +33,6 @@ interface Plan {
   name: string
   price: number
   description: string
-  credits: string
   features: string[]
   popular?: boolean
   badge?: string
@@ -47,7 +46,6 @@ const plans: Plan[] = [
     name: 'Personal',
     price: 2,
     description: 'Perfect for individual creators and personal projects',
-    credits: '500+ Long Chats, 10,000+ Short Chats',
     features: [
       '500+ Long Chats',
       '10,000+ Short Chats',
@@ -63,7 +61,6 @@ const plans: Plan[] = [
     name: 'Creator',
     price: 19,
     description: 'More power for content creators and professionals',
-    credits: '5,000+ Long Chats, 100,000+ Short Chats',
     features: [
       'Everything in Personal',
       '2 Project Collaborators',
@@ -81,7 +78,6 @@ const plans: Plan[] = [
     name: 'Business',
     price: 99,
     description: 'Enterprise features for teams and organizations',
-    credits: '50,000+ Long Chats, 1,000,000+ Short Chats',
     features: [
       'Everything in Creator plan',
       '10 Project Collaborators',
@@ -179,7 +175,7 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
         {plans.map((plan) => (
           <Card
             key={plan.id}
-            className={`relative p-8 cursor-pointer transition-all duration-300 hover:scale-105 ${
+            className={`relative p-8 cursor-pointer transition-all duration-300 hover:scale-105 flex flex-col ${
               selectedPlan === plan.id
                 ? 'border-sidebar-foreground bg-sidebar-foreground/5 shadow-lg shadow-sidebar-foreground/20'
                 : 'border-sidebar-border bg-sidebar-accent hover:border-sidebar-foreground/30 hover:shadow-lg'
@@ -203,11 +199,10 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
                   <span className="text-4xl font-bold text-sidebar-foreground">${plan.price}</span>
                   <span className="text-sidebar-foreground/70 text-lg">/ month</span>
                 </div>
-                <p className="text-sidebar-foreground/60 text-sm mt-2 font-medium">{plan.credits}</p>
               </div>
             </div>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-8 flex-1">
               {plan.features.map((feature, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
@@ -219,7 +214,7 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             </div>
 
             <Button
-              className={`w-full py-3 font-semibold transition-all duration-200 ${
+              className={`w-full py-3 font-semibold transition-all duration-200 mt-auto ${
                 selectedPlan === plan.id
                   ? 'bg-sidebar-foreground hover:bg-sidebar-foreground/90 text-sidebar shadow-lg'
                   : plan.popular
@@ -404,8 +399,8 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             <span className="text-sidebar-foreground font-medium">{plans.find(p => p.id === selectedPlan)?.name}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sidebar-foreground/70">Chat Limits:</span>
-            <span className="text-sidebar-foreground font-medium">{plans.find(p => p.id === selectedPlan)?.credits}</span>
+            <span className="text-sidebar-foreground/70">Monthly Price:</span>
+            <span className="text-sidebar-foreground font-medium">${plans.find(p => p.id === selectedPlan)?.price}/month</span>
           </div>
           {Object.keys(socialLinks).filter(key => socialLinks[key]).length > 0 && (
             <div className="pt-2 border-t border-sidebar-border">
