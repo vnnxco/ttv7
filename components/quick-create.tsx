@@ -165,16 +165,16 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
         <h2 className="text-3xl font-bold text-sidebar-foreground mb-3">Choose Your Plan</h2>
         <p className="text-sidebar-foreground/70 text-lg">Select the plan that best fits your needs</p>
         
-        {/* Billing Toggle */}
-        <div className="flex items-center justify-center gap-3 mt-6">
-          <span className="text-sm text-sidebar-foreground/70">Monthly</span>
+        {/* Billing Toggle with better spacing */}
+        <div className="flex items-center justify-center gap-6 mt-8">
+          <span className="text-sm text-sidebar-foreground/70 font-medium">Monthly</span>
           <div className="relative">
             <div className="w-12 h-6 bg-sidebar-border rounded-full p-1">
               <div className="w-4 h-4 bg-sidebar-foreground rounded-full transition-transform"></div>
             </div>
           </div>
-          <span className="text-sm text-sidebar-foreground/70">Annual</span>
-          <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 text-xs ml-2">
+          <span className="text-sm text-sidebar-foreground/70 font-medium">Annual</span>
+          <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/20 text-xs">
             Save 10%
           </Badge>
         </div>
@@ -186,14 +186,14 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             key={plan.id}
             className={`relative p-8 cursor-pointer transition-all duration-300 hover:scale-105 ${
               selectedPlan === plan.id
-                ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/20'
+                ? 'border-sidebar-foreground bg-sidebar-foreground/5 shadow-lg shadow-sidebar-foreground/20'
                 : 'border-sidebar-border bg-sidebar-accent hover:border-sidebar-foreground/30 hover:shadow-lg'
-            } ${plan.popular ? 'ring-2 ring-blue-500/30 scale-105' : ''}`}
+            } ${plan.popular ? 'ring-2 ring-sidebar-foreground/30 scale-105' : ''}`}
             onClick={() => setSelectedPlan(plan.id)}
           >
             {plan.badge && (
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1.5 text-xs font-semibold shadow-lg">
+                <Badge className="bg-sidebar-foreground text-sidebar px-4 py-1.5 text-xs font-semibold shadow-lg">
                   {plan.badge}
                 </Badge>
               </div>
@@ -226,9 +226,9 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             <Button
               className={`w-full py-3 font-semibold transition-all duration-200 ${
                 selectedPlan === plan.id
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
+                  ? 'bg-sidebar-foreground hover:bg-sidebar-foreground/90 text-sidebar shadow-lg'
                   : plan.popular
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg'
+                  ? 'bg-sidebar-foreground hover:bg-sidebar-foreground/90 text-sidebar shadow-lg'
                   : 'bg-sidebar-accent border-2 border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent/80 hover:border-sidebar-foreground/30'
               }`}
               variant={selectedPlan === plan.id ? 'default' : plan.buttonVariant}
@@ -251,7 +251,7 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
         <p className="text-sidebar-foreground/60 text-sm mb-4">
           All plans include: SSL security, 99.9% uptime, and email support
         </p>
-        <Button variant="ghost" className="text-blue-500 hover:text-blue-600 text-sm">
+        <Button variant="ghost" className="text-sidebar-foreground/70 hover:text-sidebar-foreground text-sm">
           Compare all features
           <ArrowUpRightIcon className="h-4 w-4 ml-1" />
         </Button>
@@ -460,7 +460,7 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
             <Button
               onClick={currentStep === 3 ? handleCustomizeProject : handleNext}
               disabled={!canProceed()}
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-white hover:bg-gray-100 text-black font-medium"
             >
               {currentStep === 3 ? `Customize ${projectName}` : 'Continue'}
               <ArrowRightIcon className="h-4 w-4 ml-2" />
