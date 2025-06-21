@@ -235,17 +235,6 @@ export function QuickCreate({ onClose, onComplete }: QuickCreateProps) {
           </Card>
         ))}
       </div>
-
-      {/* Features Comparison */}
-      <div className="text-center mt-12">
-        <p className="text-sidebar-foreground/60 text-sm mb-4">
-          All plans include: SSL security, 99.9% uptime, and email support
-        </p>
-        <Button variant="ghost" className="text-sidebar-foreground/70 hover:text-sidebar-foreground text-sm">
-          Compare all features
-          <ArrowUpRightIcon className="h-4 w-4 ml-1" />
-        </Button>
-      </div>
     </div>
   )
 
